@@ -1,0 +1,247 @@
+@mixin dropDown{
+	margin: 0;
+	display: flex;
+	justify-content: flex-end;
+	list-style: none;
+	padding: 0;
+
+	& > li{
+
+		position: relative;
+
+		& > a{
+			padding: 10px 20px;
+			display: inline-block;
+			color: #fff;
+			transition: background-coor;
+
+			@media(max-width: $medium){
+				padding: 10px;
+			}
+
+			&:hover{
+				background-color: rgba(black, .2);
+			}
+		}
+
+		& ul{
+			border: 1px solid $primary;
+			margin: 0;
+			list-style: none;
+			padding: 0;
+			position: absolute;
+			opacity: 0;
+			left: 0;
+			pointer-events: none;
+			background: #fff;
+			transition: transform .4s, opacity .4s;
+			transform: translateY(-20px);
+
+			& li{
+
+				& a{
+					display: block;
+					padding: 10px 20px;
+					white-space: nowrap;
+					transition: background-color .2s;
+
+					&:hover{
+						background-color: rgba(#000, .1);
+					}
+				}
+			}
+		}
+
+		&:hover ul{
+			opacity: 1;
+			pointer-events: all;
+			transform: none;
+		}
+	}
+}
+
+header{
+	position: absolute;
+	top: 3vw;
+	left: 0;
+	width: 100%;
+	z-index: 80;
+	padding: 10px 0;
+	transition: background-color .2s;
+
+	@media(max-width: $medium){
+		padding: 0;
+	}
+
+	& .sidenav-trigger{
+		color: #fff;
+		font-size: clamp(26px, 2vw, 32px);
+		margin-right: 10px;
+
+		@media(min-width: 1200px){
+			display: none;
+		}
+	}
+	
+	& .container{
+
+		display: flex;
+		align-items: center;
+
+		& > a{
+
+			&#logo{
+				height: clamp(30px, .5vw, 40px);
+				aspect-ratio: 3.6 / 1;
+				background: url(/img/logo.svg) left center no-repeat;
+				transition: opacity .2s;
+				background-size: auto 100%;
+
+				@media(max-width: $small){
+					aspect-ratio: 1 / 1;
+				}
+			}
+		}
+	
+		& nav{
+
+			flex-grow: 1;
+
+			& .navigation{
+
+				width: fit-content;
+				margin-left: auto;
+				position: relative;
+				width: 100%;
+				min-height: 45px;
+
+				& .menu{
+					transition: opacity .2s;
+
+					& > ul{
+						@include dropDown();
+					}
+
+					width: fit-content;
+					margin-left: auto;
+				}
+
+				& .search-form{
+					text-align: right;
+					width: 100%;
+					height: 100%;
+					max-width: 300px;
+					position: absolute;
+					top: 0;
+					right: 0;
+					transform: translateX(20%);
+					transition: transform .4s, opacity .4s;
+					display: flex;
+					align-items: center;
+					background-color: #fff;
+					padding: 0 5px;
+					box-sizing: border-box;
+					border-radius: $border-radius;
+					opacity: 0;
+					pointer-events: none;
+
+					& input[type=submit]{
+						background-color: #efefef;
+						flex-grow: 0;
+						flex-shrink: 0;
+					}
+
+					& input[type=search]{
+
+						line-height: 2em;
+						width: 20px;
+						margin: 0;
+						border: 0;
+						padding: 0 10px;
+						box-sizing: border-box;
+						flex-grow: 1;
+
+						&:focus{
+							outline: none;
+						}
+					}
+				}
+	
+				@media(max-width: 1200px){
+	
+					&  ul{
+						display: none !important;
+					}
+				}
+			}
+
+		}
+
+		&.search-shown{
+
+			& #logo{
+
+				@media(max-width: $medium){
+					position: absolute;
+					opacity: 0;
+					left: 55px;
+				}
+			}
+
+			& nav .navigation .menu{
+				pointer-events: none;
+				opacity: 0;
+			}
+
+			& nav .navigation .search-form{
+				transform: none;
+				opacity: 1;
+				pointer-events: all;
+			}
+		}
+	
+		& .nav-extra{
+
+			display: flex;
+
+			& a{
+				padding: 10px;
+				line-height: 1em;
+				display: inline-block;
+				color: #fff;
+				transition: background-coor;
+
+				& i{
+					font-size: clamp(18px, 2vw, 20px);
+				}
+
+				&:hover{
+					background-color: rgba(black, .2);
+				}
+			}
+
+			& > ul{
+				@include dropDown();
+				
+				& ul{
+					left: unset !important;
+					right: 0;
+					width: fit-content;
+
+					& li{
+
+						& a{
+							color: $text;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&.fixed{
+		position: fixed;
+		top: 0;
+		background-color: $primary;
+	}
+}

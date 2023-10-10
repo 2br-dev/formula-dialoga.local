@@ -1,0 +1,167 @@
+@media (max-width: 600px) {
+    main#about section#mission blockquote {
+        border-width: 2px;
+    }
+}
+
+@media (min-width: 1800px) {
+    main#about section#mission blockquote.tail {
+        display: none;
+    }
+}
+
+@media (max-width: 1800px) {
+    main#about section#mission blockquote.wide {
+        display: none;
+    }
+}
+
+main#about section#mission blockquote p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4em;
+    font-style: italic;
+}
+
+main#about section#mission blockquote .author {
+    display: flex;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    main#about section#mission blockquote .author {
+        flex-direction: column;
+    }
+}
+
+main#about section#mission blockquote .author .image {
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+main#about section#mission blockquote .author .data {
+    font-size: 16px;
+    line-height: 1.4em;
+}
+
+main#about section#partners {
+    padding: 8vmax 0;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+main#about section#partners .partners-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    filter: grayscale(1);
+    z-index: -1;
+    opacity: .2;
+}
+
+main#about section#join, main#about section#plans {
+    position: relative;
+    background-color: #0055FF;
+    color: #fff;
+    padding: 4vmax 0;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+main#about section#join h2, main#about section#plans h2 {
+    color: #fff;
+    margin-top: 0;
+}
+
+main#about section#join:before, main#about section#plans:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(/img/pattern.svg);
+    background-size: 50vmax auto;
+}
+
+main#about section#join:after, main#about section#plans:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(to left, rgba(0, 85, 255, 0), #0055ff);
+}
+
+main#about section#join .container, main#about section#plans .container {
+    position: relative;
+    z-index: 2;
+}
+
+main#about section#plans .swiper-slide img {
+    width: 100%;
+    aspect-ratio: 1.6 / 1;
+}
+
+main#about section#plans #nested {
+    padding-right: 40px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+main#about section#plans #nested .swiper-slide .row {
+    margin: 0;
+}
+
+main#about section#plans #nested ~ .swiper-pagination {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+main#about section#plans .big {
+    font-size: clamp(18px, 2vw, 32px);
+    line-height: 1.4em;
+}
+
+main#about section#plans .small {
+    font-size: clamp(12px, 2vw, 16px);
+    line-height: 1.4em;
+}
+
+main#about .icon-card-wrapper {
+    height: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+main#about .icon-card-wrapper .icon-card {
+    background: #F8F8F8;
+    height: 100%;
+    padding: clamp(10px, 2vw, 20px);
+    display: flex;
+}
+
+main#about .icon-card-wrapper .icon-card i {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    color: #0055FF;
+    font-size: 2rem;
+}
+
+@media (max-width: 600px) {
+    main#about .icon-card-wrapper .icon-card {
+        flex-direction: column;
+    }
+}

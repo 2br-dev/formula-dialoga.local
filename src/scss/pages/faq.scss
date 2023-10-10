@@ -1,0 +1,86 @@
+@import '../parts/vars';
+@import '../parts/helpers';
+
+main#faq{
+
+	& .profile-question-wrapper{
+	
+		border-right: 4px solid transparent;
+	
+		&:not(:last-of-type){
+			border-bottom: 1px solid $fogged;
+		}
+	
+		& .profile-question{
+	
+			display: flex;
+			cursor: pointer;
+			transition: background-color .2s;
+	
+			&:hover{
+				background-color: rgba(black, .03);
+			}
+	
+			&-header{
+				flex-grow: 1;
+				padding: clamp(10px, 2vw, 20px);
+	
+				& .title{
+					font-size: clamp(18px, 2vw, 24px);
+					font-variation-settings: 'wght' 500;
+				}
+	
+				& .created{
+					color: $fogged;
+					font-size: 14px;
+				}
+			}
+	
+			&-icon{
+				padding: 20px;
+	
+				& i{
+					font-size: clamp(24px, 4vw, 32px);
+					color: $fogged;
+	
+					&.success{
+						color: $success;
+					}
+				}
+			}
+		}
+	
+		&.success{
+	
+			border-right: 4px solid $success;
+	
+			& .profile-question-icon{
+	
+				& i{
+					color: $success;
+				}
+			}
+		}
+	
+		& .profile-question-answer{
+			display: none;
+			max-height: 600px;
+			padding: clamp(10px, 2vw, 20px);
+			margin-right: 20px;
+			overflow: auto;
+		}
+	}
+
+	& #search{
+
+		@include searchForm();
+	}
+
+	& .articles{
+		margin: 0;
+
+		@media(max-width: $medium){
+			margin-bottom: 8vmax;
+		}
+	}
+}

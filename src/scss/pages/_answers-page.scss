@@ -1,0 +1,17 @@
+main#answer-page{
+	& section#main-content{
+
+		& .question{
+			background-color: #efefef;
+			padding: 20px;
+			margin-bottom: #{$gutter-width * 2};
+			border-radius: $border-radius;
+		}
+
+		& .answer{
+			border-left: 1px solid $fogged;
+
+			padding-left: clamp(10px, 2vw, 20px);
+		}
+	}
+}

@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght,XTRA@8..144,25..151,300..900,330..600');
+
+body{
+	font-family: 'Roboto Flex';
+	font-variation-settings: "opsz" 8, "wght" 300;
+	font-size: clamp(16px, 2vw, 18px);
+	line-height: 1.4em;
+	color: $text;
+	
+	& h1.styled{
+		font-variation-settings: "opsz" 8, "wght" 700, "wdth" 151, "opsz" 144, "XTRA" 510;
+		font-size: clamp(32px, 5vw, 82px);
+		line-height: 1em;
+	}
+
+	& h2.styled{
+		@extend h1;
+		color: $primary;
+		font-size: clamp(26px, 3vw, 46px);
+	}
+
+	& p{
+		text-align: justify;
+
+		& label{
+			text-align: left;
+		}
+	}
+}

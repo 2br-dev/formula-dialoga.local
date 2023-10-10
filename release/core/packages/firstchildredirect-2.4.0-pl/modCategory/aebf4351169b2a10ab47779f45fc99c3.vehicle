@@ -1,0 +1,49 @@
+<?php return array (
+  'unique_key' => 'category',
+  'preserve_keys' => false,
+  'update_object' => true,
+  'related_objects' => 
+  array (
+    'Snippets' => 
+    array (
+      '57676a3314e96ade3dc8bdd87453a40e' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":null,"source":0,"property_preprocess":0,"name":"FirstChildRedirect","description":"Snippet redirecting you to the first child of a parent.","editor_type":0,"category":0,"cache_type":0,"snippet":"\\/**\\n * @name FirstChildRedirect\\n * @author Jason Coward <jason@opengeek.com>\\n * @author Ryan Thrash <ryan@vertexworks.com>\\n * @author Olivier B. Deland <olivier@conseilsweb.com> Refactored for Revo and\\n * added functionnalities\\n * @author Mark Hamstra <hello@markhamstra.com> Refactor for Revo 2.1\\n * @license Public Domain\\n * @version 2.3\\n * @package firstchildredirect\\n *\\n * This snippet redirects to the first child document of a folder in which this\\n * snippet is included within the content (e.g. [[FirstChildRedirect]]).  This\\n * allows MODx folders to emulate the behavior of real folders since MODx\\n * usually treats folders as actual documents with their own content.\\n *\\n * Added parameters to allow greater flexibility\\n *\\n * &docid=`12` (optional; default: current document)\\n * Use the docid parameter to have this snippet redirect to the\\n * first child document of the specified document.\\n *\\n * &default=`1` or &default=`site_start` (optional; default: site_start)\\n * Use the default parameter to have this snippet redirect to the\\n * document specified in cases where there is no children.\\n * It can be a document ID or one of : site_start,site_unavailable_page,error_page,unauthorized_page\\n *\\n * &sortBy=`menuindex` (optional; default:menuindex)\\n * Get the first child depending on this sort order\\n * Can be any valid modx document field name\\n *\\n * &sortDir=`DESC` (optional; default:ASC)\\n * Sort `ASC` for ascendant or `DESC` for descendant\\n *\\n * &responseCode (\\"301\\", \\"302\\" or the complete response code, eg \\"HTTP\\/1.1 302 Moved Temporarily\\", defaults to 301)\\n * The responsecode (statuscode) to use for sending the redirect.\\n *\\n *\\/\\n\\/* @var modX $modx\\n * @var array $scriptProperties\\n *\\/\\n\\n\\/*\\n * Parameters\\n * Parent doc \\n *\\/\\n$docid = $modx->getOption(\'docid\', $scriptProperties, null);\\nif ($docid === null) {\\n    $parent = $modx->resource->get(\'id\');\\n} else {\\n    $parent = $docid;\\n}\\n\\n$respcode = (string)$modx->getOption(\'responseCode\', $scriptProperties, \'301\');\\n$rcodes = [\\n    \'301\' => \'HTTP\\/1.1 301 Moved Permanently\',\\n    \'302\' => \'HTTP\\/1.1 302 Moved Temporarily\',\\n];\\nif (isset($rcodes[$respcode])) {\\n    $respcode = $rcodes[$respcode];\\n}\\n$respcode = [\'responseCode\' => $respcode];\\n\\n\\/* default doc in case there\'s no children\\n * can be an id or one of: site_start, site_unavailable_page, error_page,\\n * unauthorized_page\\n * Default is site_start\\n *\\/\\n$default = $modx->getOption(\'default\', $scriptProperties, \'site_start\');\\nif (in_array($default, [\'site_start\', \'site_unavailable_page\', \'error_page\', \'unauthorized_page\'])) {\\n    $default = $modx->getOption($default, null, 1);\\n} else {\\n    if (is_numeric($default)) {\\n        $default = (int)$default;\\n    } else {\\n        return \'Invalid &default property.\';\\n    }\\n}\\n\\n\\/* sort list *\\/\\n$sortBy = $modx->getOption(\'sortBy\', $scriptProperties, \'menuindex\');\\n\\/* sort dir *\\/\\n$sortDir = $modx->getOption(\'sortDir\', $scriptProperties, \'ASC\');\\n\\n\\/*\\n* Execute\\n*\\/\\n$c = $modx->newQuery(\'modResource\');\\n$c->limit(1);\\n$c->sortby($sortBy, $sortDir);\\n$c->where([\\n    \'published\' => true,\\n    \'parent\' => $parent\\n]);\\n\\n\\/* @var modResource $child *\\/\\n$child = $modx->getObject(\'modResource\', $c);\\nif ($child) {\\n    $url = $modx->makeUrl($child->get(\'id\'));\\n    return $modx->sendRedirect($url, $respcode);\\n}\\n\\n\\/\\/ If it got here, there obviously weren\'t any children resources.. redirect to default.\\nreturn $modx->sendRedirect($modx->makeUrl($default), $respcode);","locked":0,"properties":null,"moduleguid":"","static":0,"static_file":"","content":"\\/**\\n * @name FirstChildRedirect\\n * @author Jason Coward <jason@opengeek.com>\\n * @author Ryan Thrash <ryan@vertexworks.com>\\n * @author Olivier B. Deland <olivier@conseilsweb.com> Refactored for Revo and\\n * added functionnalities\\n * @author Mark Hamstra <hello@markhamstra.com> Refactor for Revo 2.1\\n * @license Public Domain\\n * @version 2.3\\n * @package firstchildredirect\\n *\\n * This snippet redirects to the first child document of a folder in which this\\n * snippet is included within the content (e.g. [[FirstChildRedirect]]).  This\\n * allows MODx folders to emulate the behavior of real folders since MODx\\n * usually treats folders as actual documents with their own content.\\n *\\n * Added parameters to allow greater flexibility\\n *\\n * &docid=`12` (optional; default: current document)\\n * Use the docid parameter to have this snippet redirect to the\\n * first child document of the specified document.\\n *\\n * &default=`1` or &default=`site_start` (optional; default: site_start)\\n * Use the default parameter to have this snippet redirect to the\\n * document specified in cases where there is no children.\\n * It can be a document ID or one of : site_start,site_unavailable_page,error_page,unauthorized_page\\n *\\n * &sortBy=`menuindex` (optional; default:menuindex)\\n * Get the first child depending on this sort order\\n * Can be any valid modx document field name\\n *\\n * &sortDir=`DESC` (optional; default:ASC)\\n * Sort `ASC` for ascendant or `DESC` for descendant\\n *\\n * &responseCode (\\"301\\", \\"302\\" or the complete response code, eg \\"HTTP\\/1.1 302 Moved Temporarily\\", defaults to 301)\\n * The responsecode (statuscode) to use for sending the redirect.\\n *\\n *\\/\\n\\/* @var modX $modx\\n * @var array $scriptProperties\\n *\\/\\n\\n\\/*\\n * Parameters\\n * Parent doc \\n *\\/\\n$docid = $modx->getOption(\'docid\', $scriptProperties, null);\\nif ($docid === null) {\\n    $parent = $modx->resource->get(\'id\');\\n} else {\\n    $parent = $docid;\\n}\\n\\n$respcode = (string)$modx->getOption(\'responseCode\', $scriptProperties, \'301\');\\n$rcodes = [\\n    \'301\' => \'HTTP\\/1.1 301 Moved Permanently\',\\n    \'302\' => \'HTTP\\/1.1 302 Moved Temporarily\',\\n];\\nif (isset($rcodes[$respcode])) {\\n    $respcode = $rcodes[$respcode];\\n}\\n$respcode = [\'responseCode\' => $respcode];\\n\\n\\/* default doc in case there\'s no children\\n * can be an id or one of: site_start, site_unavailable_page, error_page,\\n * unauthorized_page\\n * Default is site_start\\n *\\/\\n$default = $modx->getOption(\'default\', $scriptProperties, \'site_start\');\\nif (in_array($default, [\'site_start\', \'site_unavailable_page\', \'error_page\', \'unauthorized_page\'])) {\\n    $default = $modx->getOption($default, null, 1);\\n} else {\\n    if (is_numeric($default)) {\\n        $default = (int)$default;\\n    } else {\\n        return \'Invalid &default property.\';\\n    }\\n}\\n\\n\\/* sort list *\\/\\n$sortBy = $modx->getOption(\'sortBy\', $scriptProperties, \'menuindex\');\\n\\/* sort dir *\\/\\n$sortDir = $modx->getOption(\'sortDir\', $scriptProperties, \'ASC\');\\n\\n\\/*\\n* Execute\\n*\\/\\n$c = $modx->newQuery(\'modResource\');\\n$c->limit(1);\\n$c->sortby($sortBy, $sortDir);\\n$c->where([\\n    \'published\' => true,\\n    \'parent\' => $parent\\n]);\\n\\n\\/* @var modResource $child *\\/\\n$child = $modx->getObject(\'modResource\', $c);\\nif ($child) {\\n    $url = $modx->makeUrl($child->get(\'id\'));\\n    return $modx->sendRedirect($url, $respcode);\\n}\\n\\n\\/\\/ If it got here, there obviously weren\'t any children resources.. redirect to default.\\nreturn $modx->sendRedirect($modx->makeUrl($default), $respcode);"}',
+        'guid' => '5a03a7ddae791000b2f435798feed02d',
+        'native_key' => NULL,
+        'signature' => '0b50661eb57a85d9b5d81a1066514335',
+      ),
+    ),
+  ),
+  'related_object_attributes' => 
+  array (
+    'Snippets' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+  ),
+  'namespace' => 'firstchildredirect',
+  'resolve' => 
+  array (
+    0 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"firstchildredirect-2.4.0-pl\\/modCategory\\/aebf4351169b2a10ab47779f45fc99c3\\/0\\/","target":"return MODX_CORE_PATH . \'components\\/\';","name":"firstchildredirect"}',
+    ),
+  ),
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '6c122d1ec7f3e69a611490515e9eb902',
+  'package' => 'modx',
+  'class' => 'modCategory',
+  'signature' => 'aebf4351169b2a10ab47779f45fc99c3',
+  'native_key' => 1,
+  'object' => '{"id":1,"parent":0,"category":"FirstChildRedirect","rank":0}',
+);

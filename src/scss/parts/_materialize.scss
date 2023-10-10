@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+// Color
+@import "../../../node_modules/materialize-css/sass/components/color-variables";
+@import "../../../node_modules/materialize-css/sass/components/color-classes";
+
+// Variables;
+// @import "../../../node_modules/materialize-css/sass/components/variables";
+@import './materialize_vars';
+
+// Reset
+@import "../../../node_modules/materialize-css/sass/components/normalize";
+
+// components
+@import "../../../node_modules/materialize-css/sass/components/global";
+// @import "../../../node_modules/materialize-css/sass/components/badges";
+// @import "../../../node_modules/materialize-css/sass/components/icons-material-design";
+// @import "../../../node_modules/materialize-css/sass/components/grid";
+// @import "../../../node_modules/materialize-css/sass/components/navbar";
+// @import "../../../node_modules/materialize-css/sass/components/typography";
+// @import "../../../node_modules/materialize-css/sass/components/transitions";
+// @import "../../../node_modules/materialize-css/sass/components/cards";
+@import "../../../node_modules/materialize-css/sass/components/toast";
+@import "../../../node_modules/materialize-css/sass/components/tabs";
+// @import "../../../node_modules/materialize-css/sass/components/tooltip";
+// @import "../../../node_modules/materialize-css/sass/components/buttons";
+@import "../../../node_modules/materialize-css/sass/components/dropdown";
+@import "../../../node_modules/materialize-css/sass/components/waves";
+@import "../../../node_modules/materialize-css/sass/components/modal";
+// @import "../../../node_modules/materialize-css/sass/components/collapsible";
+// @import "../../../node_modules/materialize-css/sass/components/chips";
+// @import "../../../node_modules/materialize-css/sass/components/materialbox";
+
+//  @import "../../../node_modules/materialize-css/sass/components/forms/forms";
+
+
+/* Validation Sass Placeholders */
+%valid-input-style {
+	border-bottom: 1px solid $input-success-color;
+	box-shadow: 0 1px 0 0 $input-success-color;
+  }
+  %invalid-input-style {
+	border-bottom: $input-invalid-border;
+	box-shadow: 0 1px 0 0 $input-error-color;
+  }
+  %hidden-text {
+	color: transparent;
+	user-select: none;
+	pointer-events: none;
+  }
+  %custom-success-message {
+	content: attr(data-success);
+	color: $input-success-color;
+  }
+  %custom-error-message {
+	content: attr(data-error);
+	color: $input-error-color;
+  }
+  %input-after-style {
+	display: block;
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 0;
+	opacity: 0;
+	transition: .2s opacity ease-out, .2s color ease-out;
+  }
+  
+//   @import '../../../node_modules/materialize-css/sass/components/forms/forms/input-fields';
+//   @import '../../../node_modules/materialize-css/sass/components/forms/forms/radio-buttons';
+//   @import '../../../node_modules/materialize-css/sass/components/forms/forms/checkboxes';
+//   @import '../../../node_modules/materialize-css/sass/components/forms/forms/switches';
+  @import '../../../node_modules/materialize-css/sass/components/forms/select';
+//   @import '../../../node_modules/materialize-css/sass/components/forms/forms/file-input';
+//   @import '../../../node_modules/materialize-css/sass/components/forms/forms/range';
+  
+
+// @import "../../../node_modules/materialize-css/sass/components/table_of_contents";
+@import "../../../node_modules/materialize-css/sass/components/sidenav";
+// @import "../../../node_modules/materialize-css/sass/components/preloader";
+// @import "../../../node_modules/materialize-css/sass/components/slider";
+// @import "../../../node_modules/materialize-css/sass/components/carousel";
+// @import "../../../node_modules/materialize-css/sass/components/tapTarget";
+// @import "../../../node_modules/materialize-css/sass/components/pulse";
+@import "../../../node_modules/materialize-css/sass/components/datepicker";
+// @import "../../../node_modules/materialize-css/sass/components/timepicker";
