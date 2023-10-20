@@ -102,6 +102,15 @@ header{
 				}
 			}
 		}
+
+		&.dark-logo > a{
+
+			color: $primary;
+
+			&#logo{
+				background-image: url(/img/logo-dark.svg);
+			}
+		}
 	
 		& nav{
 
@@ -239,9 +248,32 @@ header{
 		}
 	}
 
-	&.fixed{
+	@mixin fixed(){
 		position: fixed;
 		top: 0;
 		background-color: $primary;
+		height: 54px;
+		display: flex;
+		align-items: center;
+
+		& .container{
+
+			& > a{
+				
+				color: #fff !important;
+
+				&#logo{
+					background-image: url(/img/logo.svg) !important;
+				}
+			}
+		}
+	}
+
+	&.fixed{
+		@include fixed();
+	}
+
+	@media(max-width: $small){
+		@include fixed();
 	}
 }

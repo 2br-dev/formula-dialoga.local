@@ -10,13 +10,18 @@ body{
 	& h1.styled{
 		font-variation-settings: "opsz" 8, "wght" 700, "wdth" 151, "opsz" 144, "XTRA" 510;
 		font-size: clamp(32px, 5vw, 82px);
-		line-height: 1em;
+		line-height: 1.2em;
 	}
-
+	
 	& h2.styled{
 		@extend h1;
 		color: $primary;
 		font-size: clamp(26px, 3vw, 46px);
+		line-height: 1.2em;
+	}
+
+	& h2{
+		line-height: 1.2em;
 	}
 
 	& p{

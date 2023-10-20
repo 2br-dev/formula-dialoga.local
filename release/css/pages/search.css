@@ -4,6 +4,10 @@ body {
     min-height: 100vh;
 }
 
+body .placeholder {
+    background-color: #ccc;
+}
+
 body label[for] {
     color: #0055FF;
     cursor: pointer;
@@ -80,8 +84,12 @@ body section#hero {
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding-top: calc(3vw + 40px);
+    padding-top: calc(3vw + 80px);
     box-sizing: border-box;
+}
+
+body section#hero h1 {
+    margin-top: 0;
 }
 
 @media (min-width: 600px) {
@@ -130,6 +138,7 @@ body section#hero:after {
 body section#hero .container {
     position: relative;
     z-index: 2;
+    margin-top: 50px;
 }
 
 body section#feedback {
@@ -309,7 +318,11 @@ body .bttn-flat, body .bttn-flat-accent, body .modal.datepicker-modal .btn-flat 
 }
 
 body .bttn-flat-accent {
-    color: #0055FF;
+    color: #0055FF !important;
+}
+
+body .bttn.large, body .large.bttn-white, body .large.bttn-white-outlined, body .large.bttn-outlined, body .large.bttn-flat, body .large.bttn-flat-accent, body .modal.datepicker-modal .large.btn-flat {
+    font-size: clamp(21px, 2vw, 26px);
 }
 
 body .pin {
@@ -404,11 +417,28 @@ body .modal .modal-header .modal-close {
 }
 
 body .modal#login-form {
-    width: 400px;
+    max-width: 400px;
 }
 
 body .modal#register-form {
-    width: 600px;
+    max-width: 600px;
+}
+
+@media (max-width: 600px) {
+    body .modal#register-form .modal-footer {
+        padding-bottom: 20px;
+        height: auto;
+    }
+
+    body .modal#register-form .bttn-flat, body .modal#register-form .bttn-flat-accent, body .modal#register-form .modal.datepicker-modal .btn-flat, body .modal.datepicker-modal .modal#register-form .btn-flat, body .modal#register-form .bttn-flat-accent {
+        width: 80%;
+        display: block;
+        margin: auto;
+        float: none !important;
+        clear: both;
+        text-align: center;
+        margin-bottom: 10px;
+    }
 }
 
 body .modal#update-password {
@@ -416,7 +446,7 @@ body .modal#update-password {
 }
 
 body .modal#ask-question {
-    width: 900px;
+    max-width: 900px;
 }
 
 body .modal#ask-question textarea {
@@ -427,13 +457,19 @@ body .modal#ask-question .success-slide {
     display: flex;
 }
 
+@media (max-width: 800px) {
+    body .modal#ask-question .success-slide {
+        flex-direction: column;
+    }
+}
+
 body .modal#ask-question .icon-wrapper {
     margin-right: 20px;
     flex-shrink: 0;
 }
 
 body .modal#ask-question .big-icon {
-    font-size: clamp(180px, 4vw, 260px);
+    font-size: clamp(120px, 4vw, 260px);
     color: #0FCF95;
 }
 

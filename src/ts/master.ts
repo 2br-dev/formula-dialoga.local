@@ -25,7 +25,7 @@ $(() => {
 	let nestedSlider:Swiper;
 	let questionsSlider:Swiper;
 	
-	Hyphenator.prototype.hyphenate('p, h1, h2');
+	Hyphenator.prototype.hyphenate('p, h1:not(.strict), h2, a');
 
 	// Предыдущее/следующее видео
 	$('body').on('click', '.video-arrow', (e:JQuery.ClickEvent) => {
@@ -85,37 +85,51 @@ $(() => {
 	});
 
 	// Скрытие вопроса из общего списка в личном кабинете
-	$('body').on('click', '.is_hidden', (e:JQuery.ClickEvent) => {
+	// $('body').on('click', '.is_hidden', (e:JQuery.ClickEvent) => {
 
-		let el = <HTMLLinkElement>e.currentTarget;
-		let docId = el.dataset['id'];
-		let value = el.dataset['hide'];
-		let newValue = value == '1' ? null : "1";
-		let newClass = newValue == '1' ? 'bx-hide' : 'bx-show';
+	// 	let el = <HTMLLinkElement>e.currentTarget;
+	// 	let docId = el.dataset['id'];
+	// 	let value = el.dataset['hide'];
+	// 	let newValue = value == '1' ? null : "1";
+	// 	let newClass = newValue == '1' ? 'bx-hide' : 'bx-show';
 
-		let data = {
-			docId: docId,
-			value: newValue,
-			action: 'setPrivacy'
-		};
+	// 	let data = {
+	// 		docId: docId,
+	// 		value: newValue,
+	// 		action: 'setPrivacy'
+	// 	};
 
-		$.ajax({
-			url: '/assets/custom-classes/qa.php',
-			dataType: 'json',
-			data: data,
-			type: 'post',
-			success: (response) => {
-				M.toast({html: response.message});
-				$(el).attr('data-hide', newValue);
-				$(el).find('i').attr('class', 'bx ' + newClass);
-			},
-			error: (error) => {
-				M.toast({html: 'Ошибка при выполнении запроса!'});
-				console.error(error.responseJSON.message);
-			}
-		})
+	// 	$.ajax({
+	// 		url: '/assets/custom-classes/qa.php',
+	// 		dataType: 'json',
+	// 		data: data,
+	// 		type: 'post',
+	// 		success: (response) => {
+	// 			M.toast({html: response.message});
+	// 			$(el).attr('data-hide', newValue);
+	// 			$(el).find('i').attr('class', 'bx ' + newClass);
+	// 		},
+	// 		error: (error) => {
+	// 			M.toast({html: 'Ошибка при выполнении запроса!'});
+	// 			console.error(error.responseJSON.message);
+	// 		}
+	// 	})
 
 		
+	// })
+
+	$('body').on('click', '.scroll-link', (e:JQuery.ClickEvent) => {
+		e.preventDefault();
+		let el = <HTMLLinkElement>e.target;
+		let href=new URL(el.href);
+		let target = href.hash;
+
+		let top = $(target).offset()?.top;
+
+		$('html, body').animate({
+			scrollTop: top
+		}, 400);
+
 	})
 
 	// Скрытие тоста при нажатии кнопки
@@ -240,13 +254,15 @@ $(() => {
 
 	// Слайдер в модалке задать вопрос
 	if($('#question-swiper').length){
-		questionsSlider = new Swiper('#question-swiper');
+		questionsSlider = new Swiper('#question-swiper', {
+			autoHeight: true
+		});
 	}
 
 	// Слайдер новостей в шапке главной
 	if($('#news-swiper').length){
 		let newsSwiper = new Swiper('#news-swiper', {
-			spaceBetween: 20,
+			spaceBetween: 10,
 			pagination: {
 				el: '#news-pagination',
 				type: 'bullets',
@@ -256,11 +272,14 @@ $(() => {
 				300: {
 					slidesPerView: 1
 				},
-				1300: {
+				800:{
 					slidesPerView: 2
 				},
-				1600: {
+				1300: {
 					slidesPerView: 3
+				},
+				1700: {
+					slidesPerView: 2
 				}
 			}
 		});
@@ -292,6 +311,7 @@ $(() => {
 	// Слайдер партнёров
 	if($('#partners-slider').length){
 		let partnersSlider = new Swiper('#partners-slider', {
+			spaceBetween: 20,
 			breakpoints: {
 				300: {
 					slidesPerView: 2
@@ -323,12 +343,27 @@ $(() => {
 	if($('.question[data-id]').length){
 
 		// Подсвечиваем первый вопрос по умолчанию
-		$('.question:first-of-type').addClass('active');
+		if(window.innerWidth >= 1200){
+			$('.question:first-of-type').addClass('active');
+		}
 
+		// Запрос на Back-end
 		$('body').on('click', '.question[data-id]', (e:JQuery.ClickEvent) => {
 
-			$('.dynamic-content').addClass('loading');
 			let element = <HTMLElement>e.currentTarget;
+
+			if(window.innerWidth <= 1200){
+				$('.mobile-answer').css({display: 'none'});
+				let top = $('.questions').offset().top - 160;
+				$('html, body').scrollTop(top);
+			}
+
+			if(element.classList.contains('active') && window.innerWidth <= 1200){
+				$(element).removeClass('active').find('.mobile-answer').slideUp('fast');
+				return;
+			}
+
+			$('.dynamic-content').addClass('loading');
 			let id = element.dataset['id'];
 			let urlString = window.location.origin + "/assets/custom-classes/qa.php";
 			let data = {
@@ -343,11 +378,25 @@ $(() => {
 				dataType: 'json',
 				success: (response) => {
 					let data = <IDocSuccessResponse>response;
-			 		$('.answer-author .name').text(data.author);
-			 		$('.answer-author .rank').text(data.rank);
-			 		$('.answer-content').html(data.content).scrollTop(0);
+
+					$('.answer-author .name').text(data.author);
+					$('.answer-author .rank').text(data.rank);
+					$('.answer-content').html(data.content).scrollTop(0);
 					$('.question').removeClass('active');
 					$(element).addClass('active');
+
+					let answerRoot = <HTMLElement>element.querySelector('.mobile-answer');
+					answerRoot.style.display = 'none';
+					$(answerRoot).find('.name').text(data.author);
+					$(answerRoot).find('.rank').text(data.rank);
+					$(answerRoot).find('.answer').html(data.content);
+
+					Hyphenator.prototype.hyphenate('p, h1:not(.strict), h2, a');
+
+					$('.question').removeClass('active');
+					$(element).addClass('active');
+					$(answerRoot).slideDown('fast');
+
 				},
 				error: error => {
 					console.error(error);
@@ -542,6 +591,9 @@ $(() => {
 			},
 			error: (error) => {
 				M.toast({html: error.responseJSON.message});
+			},
+			complete: () => {
+				form.scrollTop(0);
 			}
 		})
 	});

@@ -94,6 +94,10 @@
 		& > .col{
 			float: none;
 		}
+
+		&.baseline{
+			align-items: baseline;
+		}
 	}
 
 	&.vcenter{
@@ -126,33 +130,33 @@
 			@include gridCol("t");
 		}
 
-		// //= Extra-small rules ===================================
+		//= Extra-small rules ===================================
 
-		@media(min-width: $extra-small) {
+		@media(min-width: $extra-small){// and (max-width: #{$small - 1}) {
 			@include gridCol("xs");
 		}
 
-		// //= Small rules =========================================
-		@media(min-width: $small) {
+		//= Small rules =========================================
+		@media(min-width: $small){// and (max-width: #{$medium - 1}){
 			@include gridCol("s");
 		}
 
-		// //= Medium rules =========================================
-		@media(min-width: $medium) {
+		//= Medium rules =========================================
+		@media(min-width: $medium){// and (max-width: #{$large - 1}){
 			@include gridCol('m');
 		}
 
-		// //= Large rules ==========================================
-		@media(min-width: $large) {
+		//= Large rules ==========================================
+		@media(min-width: $large){// and (max-width: #{$extra-large - 1}){
 			@include gridCol('l');
 		}
 
-		// //= Extra-large rules ====================================
-		@media(min-width: $extra-large) {
+		//= Extra-large rules ====================================
+		@media(min-width: $extra-large){// and (max-width: #{$huge - 1}) {
 			@include gridCol('xl');
 		}
 
-		// //= Huge rules ====================================
+		//= Huge rules ====================================
 		@media(min-width: $huge) {
 			@include gridCol('h');
 		}

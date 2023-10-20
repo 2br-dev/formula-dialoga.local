@@ -16,8 +16,9 @@ footer{
 
 		flex-grow: 1;
 		margin:$gutter-width 0;
-
+		
 		& .logo-footer{
+			margin-left: 10px;
 			height: 40px;
 			display: block;
 			aspect-ratio: 3.5 / 1;
@@ -30,11 +31,6 @@ footer{
 
 		display: flex;
 		align-items: center;
-
-		@media(max-width: $medium){
-			display: initial;
-			margin: 20px 0;
-		}
 
 		& li{
 
@@ -49,14 +45,56 @@ footer{
 			}
 		}
 	}
+
+	@media(max-width: $medium){
+
+		padding: 2vmax 0;
+
+		& ul{
+
+			display: block;
+			margin: 1.5vmax 0;
+	
+			& li{
+				line-height: 1.8em;
+			}
+		}
+	}
 }
 
 .footer-copyright{
 	background: #322B2B;
 	color: $fogged;
 	padding: 10px 0;
+
+	& .container{
+		padding: 0 10px;
+		box-sizing: border-box;
+	}
 	
 	& a{
 		color: $fogged;
+	}
+
+	@media(max-width: 320px){
+
+		& .container{
+
+			display: flex;
+			flex-direction: column;
+
+			& > *{
+				display: block;
+				width: 100%;
+				float: none;
+				clear: both;
+				text-align: center;
+				line-height: 2em;
+			}
+
+			& .year{
+				order: 1;
+			}
+		}
 	}
 }

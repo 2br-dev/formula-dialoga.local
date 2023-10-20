@@ -191,63 +191,70 @@ if(!isset($_POST['action'])){
 			}
 
 			//Загрузка файлов
-			// Определение базовой директории
-			$root = $_SERVER['DOCUMENT_ROOT'];
-
-			// Формируем алиас пользователя
-			$user = $answers->modx->getUser();
-			$profile = $user->getOne('Profile');
-			$mail = $profile->get('email');
-			$name = str_replace("@", "", $mail);
-			$name = str_replace(".", "", $name);
-			$target_dir = "$root/assets/user-uploads/$name";
-			$targetAlias = "/assets/user-uploads/$name";
-
-			// Если каталога для пользрователя не существовало, создаём
-			if(!file_exists($target_dir)){
-				mkdir($target_dir, 0700);
-			}
-			
-			// Формируем пул ошибок прикреплённых файлов
 			if(isset($_FILES) && !empty($_FILES)){
+		
+				// Определение базовой директории
+				$root = $_SERVER['DOCUMENT_ROOT'];
+
+				// Формируем алиас пользователя
+				$user = $answers->modx->getUser();
+				$profile = $user->getOne('Profile');
+				$mail = $profile->get('email');
+				$name = str_replace("@", "", $mail);
+				$name = str_replace(".", "", $name);
+				$target_dir = "$root/assets/user-uploads/$name";
+				$targetAlias = "/assets/user-uploads/$name";
+
+				// Если каталога для пользрователя не существовало, создаём
+				if(!file_exists($target_dir)){
+					mkdir($target_dir, 0700);
+				}
+
+				$files2upload = [];
 
 				for($i=0; $i < count($_FILES['file']['name']); $i++){
 
-					if($_FILES['file']['error'][$i]){
-						http_response_code(403);
-						die(json_encode(array('message' => 'Не удалось загрузить файл – возможно файл повреждён!'), JSON_UNESCAPED_UNICODE));
-					}
+					if($_FILES['file']['name'][$i] != ""){
 
-					// Если файл ещё не был загружен
-					if(!file_exists($target_dir . "/" . $_FILES['file']['name'][$i])){
-
-						// Проверяем расширение
-						$extArray = explode(".", $_FILES['file']['name'][$i]);
-						$index = count($extArray) - 1;
-						$extention = $extArray[$index];
-						$allowed = ["jpg", "png", "doc", "docx"];
-
-						if(!in_array($extention, $allowed)){
+						if($_FILES['file']['error'][$i]){
 							http_response_code(403);
-							die(json_encode(array('message' => 'Не удалось загрузить файл – неверное расширение!'), JSON_UNESCAPED_UNICODE));
+							die(json_encode(array('message' => 'Не удалось загрузить файл – возможно файл повреждён!'), JSON_UNESCAPED_UNICODE));
 						}
+	
+						// Если файл ещё не был загружен
+						if(!file_exists($target_dir . "/" . $_FILES['file']['name'][$i])){
+	
+							// Проверяем расширение
+							$extArray = explode(".", $_FILES['file']['name'][$i]);
+							$index = count($extArray) - 1;
+							$extention = $extArray[$index];
+							$allowed = ["jpg", "png", "doc", "docx"];
+	
+							if(!in_array($extention, $allowed)){
+								http_response_code(403);
+								die(json_encode(array('message' => 'Не удалось загрузить файл – неверное расширение!'), JSON_UNESCAPED_UNICODE));
+							}
+	
+							// Ограничение файла по размеру – до 10Мб.
+							if($_FILES['file']['size'][$i] >= 2000000){
+								http_response_code(502);
+								die(json_encode(array('message' => "Не удалось загрузить {$_FILES['file']['name'][$i]} – большой размер.")));
+							}
 
-						// Ограничение файла по размеру – до 10Мб.
-						if($_FILES['file']['size'][$i] >= 2000000){
-							http_response_code(502);
-							die(json_encode(array('message' => "Не удалось загрузить {$_FILES['file']['name'][$i]} – большой размер.")));
+							$target_file = $target_dir . "/" . $_FILES['file']['name'][$i];
+	
+						}else{
+							http_response_code(400);
+							die(json_encode(array('message' => 'Не удалось загрузить файл – файл с таким именем уже существует!'), JSON_UNESCAPED_UNICODE));
 						}
-						$target_file = $target_dir . "/" . $_FILES['file']['name'][$i];
-
-					}else{
-						http_response_code(400);
-						die(json_encode(array('message' => 'Не удалось загрузить файл – файл с таким именем уже существует!'), JSON_UNESCAPED_UNICODE));
 					}
 				}
 
 				// Если ошибок нет, загружаем файлы
 				for($i=0; $i < count($_FILES['file']['name']); $i++){
-					move_uploaded_file($_FILES['file']['tmp_name'][$i], $target_dir . "/" . $_FILES['file']['name'][$i]);
+					if($_FILES['file']['name'][$i] != ""){
+						move_uploaded_file($_FILES['file']['tmp_name'][$i], $target_dir . "/" . $_FILES['file']['name'][$i]);
+					}
 				}
 			}
 
