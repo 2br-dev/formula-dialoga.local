@@ -73,16 +73,7 @@ class Auth{
 
 	public function register($user_data){
 		$expected = array(
-			"login" => array(
-				"type" => "string",
-			),
-			"firstname" => array(
-				"type" => "string",
-			),
-			"lastname" => array(
-				"type" => "string",
-			),
-			"middlename" => array(
+			"fullname" => array(
 				"type" => "string",
 			),
 			"email" => array(
@@ -90,9 +81,6 @@ class Auth{
 			),
 			"organization" => array(
 				"type" => "string",
-			),
-			"inn" => array(
-				"type" => "int",
 			),
 			"rank" => array(
 				"type" => "string",
@@ -106,6 +94,16 @@ class Auth{
 		);
 
 		if($this->validate($user_data, $expected)){
+
+			// Проверяеем пользователя с указанным E-mail
+			$q = "select id from modx_user_attributes where email='{$user_data['email']}'";
+			$request = $this->modx->query($q);
+			$result = $request->fetch(PDO::FETCH_ASSOC);
+
+			if($result != false){
+				http_response_code(403);
+				die(json_encode(array("message" => "Пользователь с указанным E-mail уже зарегистрирован!"), JSON_UNESCAPED_UNICODE));
+			}
 			
 			// Создаём объект пользователя
 			if($user_data['password'] !== $user_data['confirm'] || $user_data['password'] == ''){
@@ -115,23 +113,22 @@ class Auth{
 
 			try{
 
+				$login = explode("@", $user_data['email'])[0];
 				$user = $this->modx->newObject('modUser');
-				$user->set('username', $user_data['login']);
+				$user->set('username', $login);
 				$user->set('password', $user_data['password']);
 	
 				// Создаём объект профиля пользователя
 				$profile = $this->modx->newObject('modUserProfile');
 	
 				// Заполняем поля данными
-				$fullName = "{$user_data['lastname']} {$user_data['firstname']} {$user_data['middlename']}";
-				$profile->set('fullname', $fullName);
+				$profile->set('fullname', $user_data['fullname']);
 				$profile->set('email', $user_data['email']);
 				
 				// Расширенные поля
 				$extra = $profile->get('extended');
 				$extra['organization'] = $user_data['organization'];
 				$extra['rank'] = $user_data['rank'];
-				$extra['inn'] = $user_data['inn'];
 				$profile->set('extended', $extra);
 	
 				// Добавляем данные к профилю

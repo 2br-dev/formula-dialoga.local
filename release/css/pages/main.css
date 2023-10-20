@@ -31,7 +31,6 @@ main#main section#main-hero img {
     aspect-ratio: 4 / 3;
     margin: auto;
     display: block;
-    opacity: .5;
 }
 
 main#main section#main-hero:before {

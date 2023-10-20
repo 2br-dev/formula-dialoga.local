@@ -496,6 +496,7 @@ $(() => {
 		let form = <HTMLFormElement>e.currentTarget;
 		let data = $(form).serialize();
 		let url = "/assets/custom-classes/auth.php";
+		let modal = M.Modal.getInstance(form);
 
 		$.ajax({
 			url: url,
@@ -504,6 +505,7 @@ $(() => {
 			dataType: 'json',
 			success: (response) => {
 				M.toast({html: response.message})
+				modal.close();
 			},
 			error: (error) => {
 				M.toast({html: error.responseJSON.message})
