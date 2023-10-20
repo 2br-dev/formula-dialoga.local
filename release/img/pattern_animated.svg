@@ -6,6 +6,7 @@
 	.st0{
 		fill:#002DFF;
 		animation: move 30s linear infinite;
+		-webkit-animation: move 30s linear infinite;
 	}
 	@keyframes move{
 		from{

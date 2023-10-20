@@ -66,8 +66,8 @@ main#main section#main-hero .call-to-action {
 
 @media (max-width: 1900px) {
     main#main section#main-hero:before {
-        -webkit-mask-size: 65% auto;
-        mask-size: 65% auto;
+        -webkit-mask-size: 63% auto;
+        mask-size: 63% auto;
     }
 }
 
