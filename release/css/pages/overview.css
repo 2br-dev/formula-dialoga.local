@@ -35,28 +35,9 @@ main#news-overview section#overview .digest-entry span.date {
 
 main#news-overview section#overview .breaking-news-img {
     width: 100%;
-    min-height: 100%;
     aspect-ratio: 2 / 1;
     -o-object-fit: cover;
     object-fit: cover;
-}
-
-@media (max-width: 1900px) {
-    main#news-overview section#overview .breaking-news-img {
-        aspect-ratio: 4 / 3;
-    }
-}
-
-@media (max-width: 1400px) {
-    main#news-overview section#overview .breaking-news-img {
-        aspect-ratio: 1 / 1;
-    }
-}
-
-@media (max-width: 1200px) {
-    main#news-overview section#overview .breaking-news-img {
-        aspect-ratio: 2 / 1;
-    }
 }
 
 main#news-overview section#overview .breaking-news-info {
@@ -92,8 +73,17 @@ main#news-overview section#overview .news-article .image-wrapper {
     flex-shrink: 0;
 }
 
+@media (max-width: 1800px) {
+    main#news-overview section#overview .news-article .image-wrapper {
+        width: calc(30% - 20px);
+    }
+}
+
 main#news-overview section#overview .news-article .image-wrapper img {
     display: block;
+    aspect-ratio: 4 / 3;
+    -o-object-fit: cover;
+    object-fit: cover;
 }
 
 main#news-overview section#overview .news-article .data {
@@ -101,6 +91,12 @@ main#news-overview section#overview .news-article .data {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+@media (max-width: 1800px) {
+    main#news-overview section#overview .news-article .data {
+        width: 70%;
+    }
 }
 
 main#news-overview section#overview .news-article .data .date {
@@ -132,34 +128,6 @@ main#news-overview section#overview .news-article .data a:hover {
 main#news-overview section#overview .news-article .data .link a {
     color: #333;
     font-size: 16px;
-}
-
-@media (max-width: 1900px) and (min-width: 1200px) {
-    main#news-overview section#overview .news-article {
-        flex-direction: column;
-    }
-
-    main#news-overview section#overview .news-article .image-wrapper {
-        margin-bottom: 20px;
-    }
-
-    main#news-overview section#overview .news-article .image-wrapper, main#news-overview section#overview .news-article .data {
-        width: 100%;
-    }
-}
-
-@media (max-width: 800px) {
-    main#news-overview section#overview .news-article {
-        flex-direction: column;
-    }
-
-    main#news-overview section#overview .news-article .image-wrapper {
-        margin-bottom: 20px;
-    }
-
-    main#news-overview section#overview .news-article .image-wrapper, main#news-overview section#overview .news-article .data {
-        width: 100%;
-    }
 }
 
 main#news-overview section#overview #overview-afisha-slider .swiper-slide {

@@ -14,18 +14,21 @@
 			display: inline-block;
 			color: #fff;
 			transition: background-coor;
+			border-radius: $border-radius;
 
 			@media(max-width: $medium){
 				padding: 10px;
 			}
 
 			&:hover{
-				background-color: rgba(black, .2);
+				background-color: rgba(black, .05);
 			}
 		}
 
 		& ul{
-			border: 1px solid $primary;
+			// border: 1px solid $primary;
+			border-radius: $border-radius;
+			overflow: hidden;
 			margin: 0;
 			list-style: none;
 			padding: 0;
@@ -36,6 +39,7 @@
 			background: #fff;
 			transition: transform .4s, opacity .4s;
 			transform: translateY(-20px);
+			box-shadow: 0 2px 22px rgba(black, .2);
 
 			& li{
 
@@ -246,6 +250,45 @@ header{
 				}
 			}
 		}
+
+		&.dark{
+
+			color: $primary !important;
+
+			& #logo{
+				background-image: url(/img/logo-dark.svg);
+			}
+
+			& .sidenav-trigger{
+				color: $primary;
+			}
+
+			& nav{
+
+				& .navigation{
+					
+					& .menu{
+
+						& > ul{
+		
+							& > li{
+		
+								& > a{
+									color: $primary;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			& .nav-extra{
+
+				& > ul > li > a{
+					color: $primary;
+				}
+			}
+		}
 	}
 
 	@mixin fixed(){
@@ -265,6 +308,14 @@ header{
 				&#logo{
 					background-image: url(/img/logo.svg) !important;
 				}
+			}
+
+			& .menu > ul > li > a{
+				color: #fff !important;
+			} 
+
+			& .nav-extra > ul > li > a{
+				color: #fff !important;
 			}
 		}
 	}

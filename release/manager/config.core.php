@@ -4,6 +4,6 @@
  * Add customizations to the $config_options array in `core/config/config.inc.php`.
  *
  */
-define('MODX_CORE_PATH', 'D:\Projects\Hosts\formula-dialoga.local\release/core/');
+define('MODX_CORE_PATH', 'G:/Hosts/formula-dialoga.local/release/core/');
 define('MODX_CONFIG_KEY', 'config');
 ?>

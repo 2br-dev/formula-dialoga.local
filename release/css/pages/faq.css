@@ -4,6 +4,10 @@ body {
     min-height: 100vh;
 }
 
+body .swiper-pagination-lock {
+    display: none;
+}
+
 body .placeholder {
     background-color: #ccc;
 }

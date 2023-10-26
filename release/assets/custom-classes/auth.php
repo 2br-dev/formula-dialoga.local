@@ -4,6 +4,8 @@ header("Content-Type:application/json");
 
 class Auth{
 
+	private $modx = null;
+
 	public function __construct(){
 		$this->connectModx();
 	}
@@ -58,7 +60,11 @@ class Auth{
 		
 		// Текущий пользователь
 		$user = $this->modx->getUser();
-		$response = $this->modx->runProcessor('security/logout');
+		$c = array(
+			'login_context' => $this->modx->context->get('key'),
+			'add_contexts' => 'web,secure'
+		);
+		$response = $this->modx->runProcessor('security/logout', $c);
 
 		if($response->isError()){
 			http_response_code(500);
@@ -124,6 +130,7 @@ class Auth{
 				// Заполняем поля данными
 				$profile->set('fullname', $user_data['fullname']);
 				$profile->set('email', $user_data['email']);
+				$fullName = $user_data['fullname'];
 				
 				// Расширенные поля
 				$extra = $profile->get('extended');
@@ -230,7 +237,7 @@ class Auth{
 
 		$data = array(
 			'username' => $username,
-			'password' => $user_data['oldpass'],
+			'password' => $pass_data['oldpass'],
 			'context' => 'web'
 		);
 
@@ -308,7 +315,7 @@ class Auth{
 			}
 		}
 
-		$profile->set('fullname', $fullname);
+		$profile->set('fullname', $fullName);
 		$profile->set('dob', $birthday);
 		$profile->set('gender', $gender);
 		$profile->set('phone', $user_data['phone']);

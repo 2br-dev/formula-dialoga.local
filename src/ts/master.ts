@@ -2,9 +2,8 @@ import Swiper from 'swiper';
 import {Navigation, Pagination, Autoplay} from 'swiper/modules';
 import Lazy from 'vanilla-lazyload';
 import AirDatepicker from 'air-datepicker';
-import * as M from 'materialize-css';
+import M from 'materialize-css';
 import Hyphenator from './lib/hyphenate';
-import { error } from 'jquery';
 
 Swiper.use([Navigation, Pagination, Autoplay]);
 
@@ -16,16 +15,12 @@ interface IDocSuccessResponse{
 	rank:string
 }
 
-interface IDocErrorResponse{
-	message:string
-}
-
 $(() => {
 
 	let nestedSlider:Swiper;
 	let questionsSlider:Swiper;
 	
-	Hyphenator.prototype.hyphenate('p, h1:not(.strict), h2, a');
+	Hyphenator.prototype.hyphenate('p:not(.strict), h1:not(.strict), h2:not(.strict), a:not(.strict)');
 
 	// Предыдущее/следующее видео
 	$('body').on('click', '.video-arrow', (e:JQuery.ClickEvent) => {
@@ -33,8 +28,8 @@ $(() => {
 
 		// Общее число видео
 		let videoCount = document.querySelectorAll('.video-entry').length;
-		let modalEl = $(e.currentTarget).parents('.modal').get(0);
-		let current = parseInt(modalEl.dataset['index']);
+		let modalEl = <HTMLDivElement>$(e.currentTarget).parents('.modal').get(0);
+		let current = parseInt(modalEl.dataset['index'] || "-1");
 		let direction = $(e.currentTarget).hasClass('.bx.bx-chevron-right') ? 1 : -1;
 		let nextIndex = current + direction;
 
@@ -50,7 +45,7 @@ $(() => {
 		let linkEl = <HTMLElement>nextEntry.querySelector('.video-trigger:last-of-type')
 		let link = linkEl.dataset['link'] + "&autoplay=1";
 		let nameEl = <HTMLElement>nextEntry.querySelector('.title a');
-		let name = nameEl.textContent;
+		let name = nameEl.textContent || "";
 		let videoEl = <HTMLIFrameElement>modalEl.querySelector('iframe');
 
 		videoEl.src = link;
@@ -65,7 +60,7 @@ $(() => {
 	$('body').on('click', '.video-trigger', (e:JQuery.ClickEvent) => {
 		e.preventDefault();
 		let link = <HTMLElement>e.currentTarget;
-		let videoModal = M.Modal.getInstance(document.querySelector('#video-modal'));
+		let videoModal = M.Modal.getInstance(<HTMLElement>document.querySelector('#video-modal'));
 		let modalEl = <HTMLDivElement>videoModal.el;
 		let index = link.dataset['index'];
 		let videolink = link.dataset['link'] + "&autoplay=1";
@@ -263,6 +258,7 @@ $(() => {
 	if($('#news-swiper').length){
 		let newsSwiper = new Swiper('#news-swiper', {
 			spaceBetween: 10,
+			watchOverflow: true,
 			pagination: {
 				el: '#news-pagination',
 				type: 'bullets',
@@ -354,7 +350,8 @@ $(() => {
 
 			if(window.innerWidth <= 1200){
 				$('.mobile-answer').css({display: 'none'});
-				let top = $('.questions').offset().top - 160;
+				let offset = $('.questions').offset();
+				let top = offset != null ? offset.top - 160 : -160;
 				$('html, body').scrollTop(top);
 			}
 
@@ -391,7 +388,7 @@ $(() => {
 					$(answerRoot).find('.rank').text(data.rank);
 					$(answerRoot).find('.answer').html(data.content);
 
-					Hyphenator.prototype.hyphenate('p, h1:not(.strict), h2, a');
+					Hyphenator.prototype.hyphenate('p:not(.strict), h1:not(.strict), h2:not(.strict), a:not(.strict)');
 
 					$('.question').removeClass('active');
 					$(element).addClass('active');
@@ -403,6 +400,7 @@ $(() => {
 				},
 				complete: () => {
 					$('.dynamic-content').removeClass('loading');
+					let lazy = new Lazy({}, document.querySelectorAll('.lazy'));
 				}
 			})
 		})
@@ -603,24 +601,26 @@ $(() => {
 	// Отображение/скрытие ответов в профиле
 	$('body').on('click', '.profile-question', (e:JQuery.ClickEvent) => {
 
-		let path = Array.from(e.originalEvent?.composedPath());
-		let linkEl = path.filter(el => {
-			return (<HTMLElement>el).tagName == "A";
-		});
+		if(e.originalEvent){
 
-		if(!linkEl.length){
-
-			e.preventDefault();
-			let el = <HTMLElement>e.currentTarget;
-			let answerElement = $(el).next();
+			let path = Array.from(e.originalEvent.composedPath());
+			let linkEl = path.filter(el => {
+				return (<HTMLElement>el).tagName == "A";
+			});
 	
-			if(answerElement.html().trim() != ''){
-				answerElement.slideToggle('fast');
-			}else{
-				M.toast({html: 'Ответ на этот вопрос ещё не найден!'});
+			if(!linkEl.length){
+	
+				e.preventDefault();
+				let el = <HTMLElement>e.currentTarget;
+				let answerElement = $(el).next();
+		
+				if(answerElement.html().trim() != ''){
+					answerElement.slideToggle('fast');
+				}else{
+					M.toast({html: 'Ответ на этот вопрос ещё не найден!'});
+				}
 			}
 		}
-
 	});
 
 	// Переключение избранного
@@ -693,8 +693,9 @@ $(() => {
 
 	// Сабмит формы по 'Enter' по полю с соответствующим классом
 	$('body').on('click', '.submit-trigger', (e:JQuery.ClickEvent) => {
-		let form = $(e.currentTarget).parents('form').get(0);
-		form?.querySelector("[type=submit]")?.dispatchEvent(new Event('click'));
+		let form = <HTMLFormElement>$(e.currentTarget).parents('form').get(0);
+		let submit = <HTMLElement>form.querySelector("[type=submit]");
+		submit.dispatchEvent(new Event('click'));
 		form.dispatchEvent(new Event('submit'));
 	})
 });

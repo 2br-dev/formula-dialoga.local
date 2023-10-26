@@ -3,6 +3,10 @@ body{
 	flex-direction: column;
 	min-height: 100vh;
 
+	& .swiper-pagination-lock{
+		display: none;
+	}
+
 	& .placeholder{
 		background-color: #ccc;
 	}

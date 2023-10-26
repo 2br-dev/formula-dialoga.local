@@ -12,12 +12,21 @@ main#main{
 		&#main-hero{
 
 			position: relative;
-			min-height: 100vh;
+			height: 100vh;
 			display: flex;
 			align-items: center;
+			margin-bottom: 0;
+			padding: 0;
+			max-height: 1500px;
+
+			& .header-text{
+				padding-left: clamp(0px, 2vw, 120px);
+			}
 
 			& h1{
 				color: $primary;
+				font-size: clamp(26px, 2.7vw, 64px);
+				line-height: 1em;
 			}
 
 			& .descriptor{
@@ -28,29 +37,50 @@ main#main{
 				margin: 0;
 			}
 
-			& img{
-				width: 80%;
+			& .header-logo{
+
+				width: 50%;
+
+				@media(max-width: $large){
+					margin: 4vmax 0;
+				}
+				
+				&-tablet{
+					text-align: center;
+					margin: 4vmax 0;
+
+					@media(max-width: $medium){
+
+						& img{
+							width: 80%;
+						}
+					}
+				}
+			}
+
+			& .hero-illustration{
+				width: 100%;
 				aspect-ratio: 4 / 3;
 				margin: auto;
 				display: block;
 			}
 
-			&:before{
-				content: '';
-				display: block;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				z-index: 0;
-				mask-image: url(/img/curved-hero.svg);
-				mask-position: top right;
-				mask-origin: top right;
-				mask-repeat: no-repeat;
-				mask-size: 55% 100%;
-				background: $primary url(/img/pattern_animated.svg);
-			}
+			// &:before{
+			// 	content: '';
+			// 	display: block;
+			// 	position: absolute;
+			// 	top: 0;
+			// 	left: 0;
+			// 	width: 100%;
+			// 	height: 100%;
+			// 	z-index: 0;
+			// 	mask-image: url(/img/curved-hero.svg);
+			// 	mask-position: top right;
+			// 	mask-origin: top right;
+			// 	mask-repeat: no-repeat;
+			// 	mask-size: 55% 100%;
+			// 	background: $primary url(/img/pattern_animated.svg);
+			// }
 
 			& .container{
 				position: relative;
@@ -68,17 +98,15 @@ main#main{
 				}
 			}
 
-			@media(max-width: 1500px){
-				height: unset;
-				min-height: unset;
-				aspect-ratio: 16 / 10;
+			@media(max-width: $medium){
+				aspect-ratio: 1 / 1;
+				padding: 100px 0;
 			}
 
 			@media(max-width: $large){
 				height: unset;
-				padding: 100px 0;
 				min-height: unset;
-				aspect-ratio: 1 / 1;
+				aspect-ratio: 4 / 3;
 
 				&:before{
 					mask-size: calc(100% - 190px) auto;
@@ -101,6 +129,7 @@ main#main{
 		&#main-news{
 
 			background-color: transparent;
+			padding-top: 0;
 
 			& #news-swiper{
 		
@@ -151,6 +180,8 @@ main#main{
 							}
 						}
 					}
+
+					$shild_height: 1.6em;
 					
 					& .news-data{
 						font-size: 16px;
@@ -158,9 +189,42 @@ main#main{
 						display: flex;
 						flex-direction: column;
 						padding: clamp(10px, 2vmax, 20px);
-	
+
+						& .soon{
+							font-size: 14px;
+							
+							& span{
+								line-height: $shild_height;
+								display: inline-block;
+								background: $primary;
+								color: #fff;
+								padding: 0 10px;
+								border-radius: 1em;
+
+								&:before{
+									content: '\ecd1';
+									font-family: 'BoxIcons';
+								}
+							}
+						}
+						
 						& .news-date{
 							color: $fogged;
+							font-size: 14px;
+							line-height: $shild_height;
+							
+							& span{
+
+								display: inline-block;
+								padding: 0 10px;
+								border-radius: 1em;
+								background-color: rgba(black, .05);
+
+								&:before{
+									content: '\ea15';
+									font-family: 'BoxIcons';
+								}
+							}
 						}
 			
 						& .title{
@@ -418,6 +482,7 @@ main#main{
 				padding-left: #{$gutter-width * 2};
 				padding-right: 10px;
 				height: 60vh;
+				max-height: 800px;
 			}
 		}
 
@@ -524,10 +589,6 @@ main#main{
 					border-radius: $border-radius;
 					overflow: hidden;
 					display: flex;
-
-					@media(max-width: $extra-large){
-						flex-direction: column-reverse;
-					}
 				}
 				
 				&-date{
@@ -565,6 +626,29 @@ main#main{
 						width: 100%;
 					}
 				}
+
+				@media(max-width: $extra-large){
+
+					&-image{
+						width: 60%;
+					}
+
+					&-body{
+						flex-direction: column-reverse !important;
+					}
+				}
+
+				@media(max-width: $small){
+
+					&-image{
+						width: 100%;
+						padding: 10px;
+					}
+
+					&-data{
+						padding: 10px;
+					}
+				}
 			}
 		}
 
@@ -585,8 +669,13 @@ main#main{
 				font-variation-settings: 'wght' 600;
 			}
 
-			& .actions p{
-				text-align: right;
+			& .actions{
+
+				text-align: center;
+
+				& p{
+					text-align: center;
+				}
 				
 				& a:not(:first-of-type){
 					margin-left: $gutter-width;

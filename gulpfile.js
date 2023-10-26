@@ -7,7 +7,6 @@ const nodeSass = require('node-sass');
 const gulpSass = require('gulp-sass');
 const sass = gulpSass(nodeSass);
 const autoPrefixer = require('gulp-autoprefixer');
-const replace = require('gulp-replace');
 const cssbeautify = require('gulp-cssbeautify');
 
 
@@ -19,7 +18,7 @@ const webpack = require('webpack-stream');
 const include = require('gulp-file-include');
 const beautify = require('gulp-html-beautify');
 const sync = require('browser-sync').init({
-	proxy: "http://formula-dialoga.local"
+	proxy: "http://formula-dialoga.local/"
 });
 
 

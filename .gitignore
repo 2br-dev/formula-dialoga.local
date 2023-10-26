@@ -1,3 +1,7 @@
 node_modules
 .vscode
 release/core/cache
+release/connectors/
+release/core/
+release/manager/
+release/config.core.php

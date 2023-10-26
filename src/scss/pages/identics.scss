@@ -1,0 +1,67 @@
+@import '../parts/vars';
+
+main#identics{
+
+	& .identics-entry{
+		border-top: 1px solid #ccc;
+		padding: $gutter-width 0;
+		display: flex;
+		align-items: center;
+		
+		&:last-of-type{
+			border-bottom: 1px solid #ccc;
+		}
+		
+		& .image-wrapper{
+			width: calc(25% - #{$gutter-width});
+			flex-shrink: 0;
+			margin-right: clamp(10px, 2vw, 60px);
+			
+			& img{
+				display: block;
+			}
+			
+			@media(max-width: $large){
+				width: calc(40% - #{$gutter-width});
+			}
+		}
+		
+		@media(max-width: $medium){
+			flex-direction: column;
+			align-items: unset;
+			
+			& .image-wrapper{
+				width: 100%;
+				margin-bottom: 10px;
+			}
+		}
+		
+		& .data-wrapper{
+	
+			display: flex;
+			align-items: center;
+			
+			& .data{
+				width: 68%;
+			}
+			
+			& .action{
+				flex-grow: 1;
+				text-align: right;
+			}
+			
+			@media(max-width: $large){
+				flex-direction: column;
+				align-items: flex-start;
+				
+				& .data{
+					width: 100%;
+				}
+				
+				& .action{
+					margin-top: $gutter-width;
+				}
+			}
+		}
+	}
+}
